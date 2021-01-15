@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WelNews</title>
+</head>
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+    }
+    
+    body {
+        background-color: black;
+    }
+    
+    #janshatabdi {
+        text-align: center;
+        font-size: 2.3em;
+        font-family: sans-serif;
+        margin-bottom: 1em;
+        color: blue;
+    }
+    
+    #accordionnews {
+        display: flex;
+        justify-content: center;
+        flex-direction: column;
+        font-family: sans-serif;
+    }
+    
+    #titlenews {
+        font-family: sans-serif;
+        color: red;
+        font-size: 0.7em;
+    }
+    
+    #desnews {
+        padding: 0em;
+        color: white;
+        font-size: 1.2em;
+        line-height: 1.6em;
+        word-spacing: 0.2em;
+        font-family: 'Courier New', Courier, monospace;
+    }
+</style>
+
+<body>
+    <!-- nav home -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container-fluid">
+            <!-- icon -->
+            <a class="navbar-brand" href="#">WelNews</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+            <!-- end -->
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="#home">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="https://www.indiatoday.in/news.html">Link</a>
+                    </li>
+
+                    <!-- dropdown -->
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-danger dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="true">
+                          NEWS
+                        </button>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="https://www.aajtak.in/">AjjTak</a></li>
+                            <li><a class="dropdown-item" href="https://www.livehindustan.com/">Hindustan-News</a></li>
+                            <li><a class="dropdown-item" href="https://www.thehindu.com/">HindusNews</a></li>
+                            <li>
+                                <hr class="dropdown-divider">
+                            </li>
+                            <li><a class="dropdown-item" href="https://indianexpress.com/section/sports/">Sports</a></li>
+                        </ul>
+                    </div>
+
+                    <!-- disabled -->
+                    <li class="nav-item">
+                        <a class="nav-link " href="https://www.bbc.com/hindi" tabindex="1" aria-disabled="true">IndNews</a>
+                    </li>
+                </ul>
+                <!-- form -->
+                <form class="d-flex">
+                    <input class="form-control me-2" type="search" placeholder="Search News" id="newssearch" aria-label="Search">
+                    <button class="btn btn-outline-success" type="submit" id="searchbtn">Search</button>
+                    <script>
+                        const snews = document.querySelector("#newssearch");
+                        const sbtn = document.querySelector("#searchbtn");
+                        sbtn.addEventListener('click', function(e) {
+                            e.preventDefault();
+                            let urlsnews = snews.value;
+                            console.log(typeof(urlsnews))
+                            url = "google.com";
+                            console.log(typeof(url))
+                            if (urlsnews === 'google.com') {
+                                window.location = "https://www.google.com/"
+                            } else if (urlsnews === "facebook.com") {
+                                window.location = "https://www.facebook.com/"
+                            } else if (urlsnews === "github") {
+                                window.location = "https://www.github.com/"
+                            } else if (urlsnews === "jeemain") {
+                                window.location = "https://jeemain.nta.nic.in/webinfo2021/Page/Page?PageId=1&LangId=P"
+                            } else if (urlsnews === "ajjtak") {
+                                window.location = "https://www.ajjtak.in"
+                            } else if (urlsnews === "thehindu") {
+                                window.location = "https://www.thehindu.com/"
+                            }
+
+
+                            snews.value = '';
+
+                        });
+                    </script>
+                </form>
+            </div>
+        </div>
+    </nav>
+    <!-- nav end -->
+    <!-- badge -->
+    <div id="badge">
+        <h2 id="janshatabdi">welcome to WelNews <span class="badge bg-secondary">New</span></h2>
+    </div>
+    <!-- acordian -->
+    <div class="accordion" id="accordionnews" id="home">
+
+    </div>
+
+    <!-- script tag -->
+    <script>
+        // IMPORTANT FETCH API NEWS BY FETCH API
+        let myaccord = document.querySelector("#accordionnews");
+
+        let api = '94b2f638cd2ecb35af8b62a6203718b5';
+        let url = 'http://api.mediastack.com/v1/news?access_key=94b2f638cd2ecb35af8b62a6203718b5&sources=en'
+
+        fetch(url)
+            .then(response => {
+                return (response.json());
+            })
+            .then((err) => {
+                let newsdata = (err.data);
+                console.log(err)
+                Array.from(newsdata).forEach((element, index) => {
+                    // console.log(element, index)
+                    // console.log(element)
+
+                    myaccord.innerHTML += `<div class="accordion-item">
+    
+                        <div class="accordion-item">
+        <h2 class="accordion-header" id="heading${index}">
+          <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse${index}" aria-expanded="false" aria-controls="collapse${index}"
+            <h3 id="titlenews">
+            #${index}-${element['title']}...<b>Author:</b>${element["author"]}
+            </h3>
+          </button>
+        </h2>
+        <div id="collapse${index}" class="accordion-collapse collapse" aria-labelledby="heading${index}" data-bs-parent="#accordionnews">
+          <div class="accordion-body">
+         <h6 id="desnews"> ${element['description']}'
+        <b><a href="${element['url']}">READ MORE..</a></b>
+          </h6>
+          </div>
+        </div>
+      </div>
+     </div>`
+                        // document.body.innerHTML = `<a>${element.url}</a>`
+                });
+            });
+    </script>
+</body>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW" crossorigin="anonymous"></script>
+
+</html>
